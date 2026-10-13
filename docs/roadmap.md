@@ -7,7 +7,7 @@ repository buildable and its results reproducible.
 
 ## Starting Point
 
-* **Cores.** `ip/kyber512` and `ip/kyber512-masked` implement Kyber512
+* **Cores.** `ip/kyber512` and `ip/kyber512-masked` implement round-2 Kyber512
   encapsulation and decapsulation; key generation is not implemented in
   hardware. Both are Verilog-2001 with Block Memory Generator instances,
   packaged as Vivado 2019.1 IP.
@@ -18,8 +18,12 @@ repository buildable and its results reproducible.
   (XC7VX485T-2) at 100 MHz, built as Vivado 2019.1 projects with Xilinx SDK.
   A MicroBlaze application exposes the core over UART with a SimpleSerial
   command protocol.
-* **Host software.** The scripts that drove the experiments from a host
-  computer are not yet in any repository.
+* **Host software.** The host software of the original experiments is
+  archived, unmaintained, in `host/legacy`: Ruby UART drivers for the
+  CPA-PKE and CCA-KEM targets, a PyVISA oscilloscope capture script, PQC
+  Scope (an Electron front end over a Python back end for trace capture and
+  TVLA), and setup guides. The Python SimpleSerial host library and the
+  decapsulation input generator were not recovered.
 
 ## Supported Tool Versions
 
@@ -56,11 +60,11 @@ scripts that generate them.
   levels, deriving the noise parameters, compression widths, buffer sizes,
   and memory depths from it.
 * Known-answer tests for each level, run in simulation and on hardware.
-* The parameter set the cores implement is to be confirmed against the
-  reference implementation: the noise sampler implements eta = 2 only, while
-  the 768-byte ciphertext matches the round-3 Kyber512 parameters, which use
-  eta1 = 3. The target specification, round-3 Kyber or FIPS 203 (ML-KEM),
-  is decided in this phase.
+* The cores implement the round-2 Kyber512 parameters: eta = 2, d_u = 10,
+  d_v = 3, and a 736-byte ciphertext. FIPS 203 (ML-KEM) differs in its
+  parameters (for ML-KEM-512, eta1 = 3, d_v = 4, and a 768-byte ciphertext)
+  and in the hashing and key derivation of the KEM. The target
+  specification is decided in this phase.
 
 ## Phase 3: Interface and Runtime
 
@@ -76,8 +80,10 @@ scripts that generate them.
 
 * The MicroBlaze application, moved from the original SDK workspaces, built
   by script against the generated hardware description.
-* The host scripts that drive experiments over SimpleSerial, added to the
-  repository.
+* A maintained Python host package in place of the archived software: a
+  SimpleSerial client for the command set of the device application, input
+  generation and checking against the reference implementation, and trace
+  capture and TVLA ported from PQC Scope.
 * One command per experiment: build, program the board, run, and collect
   results.
 
@@ -91,7 +97,7 @@ baseline and kept only if the known-answer tests pass.
   their block RAM count, at least 170 BRAM36 by port width alone. Reading one
   or a few coefficients at a time removes most of these block RAMs and the
   multiplexers that select coefficients from the wide words.
-* **Keys and ciphertexts in block RAM.** About 25,600 bits of public key,
+* **Keys and ciphertexts in block RAM.** About 25,300 bits of public key,
   secret key, and ciphertext are copied from block RAM into registers; they
   are read from block RAM where they are needed instead.
 * **One Keccak core.** Four instances of a Keccak-f[1600] core computing two

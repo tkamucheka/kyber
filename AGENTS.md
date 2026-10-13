@@ -1,8 +1,11 @@
 # Kyber Project Instructions
 
 ## Layout
-* `ip/kyber512`: Kyber512 CCA-secure KEM core, packaged as an AXI IP (git submodule)
+* `ip/kyber512`: Kyber512 CCA-secure KEM core, packaged as an AXI IP (git
+  submodule)
 * `ip/kyber512-masked`: masked variant of the core (git submodule)
+* `host/legacy`: archived host software of the original experiments (private
+  git submodule, not fetched by default; reference only, not maintained)
 * `docs/roadmap.md`: project roadmap
 
 ## Code Style and Architecture

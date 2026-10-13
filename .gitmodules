@@ -4,3 +4,7 @@
 [submodule "ip/kyber512-masked"]
 	path = ip/kyber512-masked
 	url = https://github.com/tkamucheka/Kyber512_INDCCA2_Masked_AXI_IP.git
+[submodule "host/legacy"]
+	path = host/legacy
+	url = git@github.com:tkamucheka/pqc-host-legacy.git
+	update = none

@@ -24,6 +24,14 @@ git clone --recurse-submodules https://github.com/tkamucheka/kyber.git
 
 In an existing clone, `git submodule update --init` fetches them.
 
+`host/legacy` holds the host software of the original experiments. It is a
+private repository and is skipped by the commands above; with access, fetch
+it with:
+
+```sh
+git submodule update --init --checkout host/legacy
+```
+
 ## Roadmap
 
 Board design scripts, a parameterized security level, a bulk data interface,
