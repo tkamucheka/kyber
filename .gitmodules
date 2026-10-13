@@ -1,0 +1,6 @@
+[submodule "ip/kyber512"]
+	path = ip/kyber512
+	url = https://github.com/tkamucheka/Kyber512_INDCCA2_AXI_IP.git
+[submodule "ip/kyber512-masked"]
+	path = ip/kyber512-masked
+	url = https://github.com/tkamucheka/Kyber512_INDCCA2_Masked_AXI_IP.git
